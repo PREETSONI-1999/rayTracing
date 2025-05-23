@@ -25,7 +25,7 @@
 #define CAPP_H
 
 #include <SDL2/SDL.h>
-
+#include "./qbRay/qbImage.hpp"
 class CApp
 {
 	public:
@@ -40,7 +40,7 @@ class CApp
 		
 	private:
 		// An instance of qbImage to store the image.
-	
+		qbImage m_image;
 		// SDL2 stuff.
 		bool isRunning;
 		SDL_Window *pWindow;

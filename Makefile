@@ -13,7 +13,8 @@ TARGET = $(BIN_DIR)/my_program
 SRCS = $(wildcard $(SRC_DIR)/*.cpp)
 
 
-OBJS = $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(SRCS))
+OBJS = $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(SRCS)) \
+$(patsubst %.cpp,%.o,$(wildcard ./qbRay/*.cpp))
 
 
 all: $(TARGET)
@@ -28,7 +29,8 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp | $(OBJ_DIR)
 
 $(OBJ_DIR) $(BIN_DIR):
 	mkdir -p $@
-
+	
+.PHONEY:
 clean:
 	rm -rf $(OBJ_DIR) $(BIN_DIR)
 
