@@ -17,3 +17,6 @@ now run:
 bash run.sh
 ```
 
+NOTE : Vector Maths and Matrix computations are not entirely written from scratch.
+Indeed used librlary calls for the same
+

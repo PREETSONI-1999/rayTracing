@@ -1,8 +1,8 @@
 #!/bin/bash
-if [-z "$1" ]; then
-echo "Usage: ./run_my_program.sh <program_binary>"
-exit 1
-fi
+# if [ -z "$1" ]; then
+# echo "Usage: ./run_my_program.sh <program_binary>"
+# exit 1
+# fi
 
 if [ ! -d "bin" ]; then
 echo "Error: 'bin' directory not found. Build the project first using 'make'."

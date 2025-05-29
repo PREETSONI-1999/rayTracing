@@ -26,6 +26,7 @@
 
 #include <SDL2/SDL.h>
 #include "./qbRay/qbImage.hpp"
+#include "./qbRay/scene.hpp"
 class CApp
 {
 	public:
@@ -41,6 +42,9 @@ class CApp
 	private:
 		// An instance of qbImage to store the image.
 		qbImage m_image;
+
+		//An insrtance of the Scene class
+		qbRT::Scene m_scene;
 		// SDL2 stuff.
 		bool isRunning;
 		SDL_Window *pWindow;

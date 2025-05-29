@@ -24,6 +24,11 @@ class qbImage{
         //function to return the image for display
         void Display();
 
+
+        //function to return the dmensions of the image
+        int GetXSize();
+        int GetYSize();
+
     private:
         Uint32 ConvertColor(double red,double green,double blue);
         void InitTexture();

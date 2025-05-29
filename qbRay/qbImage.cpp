@@ -119,3 +119,12 @@ Uint32 qbImage ::ConvertColor(double red, double green, double blue)
 	return pixelColor;
 
 }
+
+//return the dimensions of the image
+int qbImage::GetXSize(){
+    return m_xSize;
+}
+
+int qbImage::GetYSize(){
+    return m_ySize;
+}
