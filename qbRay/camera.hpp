@@ -36,7 +36,11 @@ namespace qbRT
         //  return a ray which goes from pinhole out FROM a particular position on the screen
         //(viz proScreenX,proScreenY)
         // intended to vary between -1 to 1 (0 representing centre of screen)
-        Ray GenerateRay(float proScreenX, float proScreenY);
+        
+        //will modify this
+        //Ray GenerateRay(float proScreenX, float proScreenY);
+
+        bool GenerateRay(float proScreenX,float proScreenY , qbRT::Ray &cameraRay);
 
             // function to update the camera geometry
             void UpdateCameraGeometry();

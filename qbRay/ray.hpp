@@ -9,6 +9,8 @@ namespace qbRT{
     class Ray{
 
         public:
+        //default constructor
+        Ray();
         //constructor (Ray between 2 vectors pt1 and pt2)
         Ray(const qbVector<double> &point1 , const qbVector<double> &point2);
 
