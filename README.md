@@ -42,3 +42,7 @@ SDL_RenderPresent(renderer);
 Analogy
 Think of the renderer as a movie projector and textures as film reels. The projector (renderer) can show images, but only if you give it a film reel (texture) to display. The projector itself does not contain the images.
 
+## Important Concepts :
+To represent objects in local coordinate systems and then
+map (transform) them to global coordinate system is a powerful
+technique which keeps things very simple 
