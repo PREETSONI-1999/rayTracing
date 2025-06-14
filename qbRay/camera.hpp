@@ -32,10 +32,11 @@ namespace qbRT
         double GetHorzSize();
         double GetAspect();
 
-        // function to generate a ray
-        //  return a ray which goes from pinhole out FROM a particular position on the screen
-        //(viz proScreenX,proScreenY)
-        // intended to vary between -1 to 1 (0 representing centre of screen)
+        /*function to generate a ray
+         return a ray which goes from pinhole out FROM a particular position on the screen
+        (viz proScreenX,proScreenY) :normalized coordinates
+        intended to vary between -1 to 1 (0 representing centre of screen)
+        (so we would need to convert the 1290:720 (every pixel) tinto this normalized -1->1 )*/
         
         //will modify this
         //Ray GenerateRay(float proScreenX, float proScreenY);

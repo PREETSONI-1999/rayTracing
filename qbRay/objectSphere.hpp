@@ -11,7 +11,7 @@ class ObjectSphere : public ObjectBase
     ObjectSphere();
 
     //overriding the destructor
-    virtual ~ObjectSphere(); //note the override keyword
+    virtual ~ObjectSphere() override; //note the override keyword
 
     //overriding to test intersections
     virtual bool TestIntersection(const qbRT::Ray &castRay,qbVector<double>&intPoint , qbVector<double> &localNormal , qbVector<double> &localColor);

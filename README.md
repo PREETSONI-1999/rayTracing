@@ -24,3 +24,21 @@ Indeed used librlary calls for the same
 The library is qbLinAlg:
 It is a # HEADER_ONLY Library
 
+
+## Important Definitions :
+
+You create a renderer for your window:
+SDL_Renderer *renderer = SDL_CreateRenderer(window, ...);
+
+You load or create textures:
+SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
+
+You draw the texture using the renderer:
+SDL_RenderCopy(renderer, texture, ...);
+
+You present the final image:
+SDL_RenderPresent(renderer);
+
+Analogy
+Think of the renderer as a movie projector and textures as film reels. The projector (renderer) can show images, but only if you give it a film reel (texture) to display. The projector itself does not contain the images.
+

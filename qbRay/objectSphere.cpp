@@ -31,22 +31,42 @@ bool qbRT::ObjectSphere::TestIntersection(const qbRT::Ray &castRay, qbVector<dou
 
         (a is cast ray , v is direction Vector)
         */
-       qbVector<double>vhat = castRay.m_lab;
-       vhat.Normalize();
+    qbVector<double> vhat = castRay.m_lab;
+    vhat.Normalize();
 
-       //a's value will always be 1, as it is square of magnitude of unit vector
+    // a's value will always be 1, as it is square of magnitude of unit vector
 
-       double b = 2.0 *qbVector<double>::dot(castRay.m_point1,vhat);
+    double b = 2.0 * qbVector<double>::dot(castRay.m_point1, vhat);
 
-       double c = qbVector<double>::dot(castRay.m_point1,castRay.m_point1) - 1.0;
+    double c = qbVector<double>::dot(castRay.m_point1, castRay.m_point1) - 1.0;
 
-       //test whether intesection
-       double intTest = b*b - 4 *1.0*c;
-       if(intTest > 0.0){
+    // test whether intesection
+    double intTest = b * b - 4 * 1.0 * c;
+    if (intTest > 0.0)
+    {
+
+        // calculating exactly where thr intersection is by updating the intPoint vector
+        double numeratorSqrt = sqrt(intTest);
+        double t1 = (-b + numeratorSqrt) / 2 * 1.0;
+        double t2 = (-b - numeratorSqrt) / 2 * 1.0;
+
+        //if either t1 or t2 is negative => part of image is behind the camera and so we will ignore it
+        if((t1<0.0) || (t2<0.0)){
+            return false;
+        }
+        else{
+            if(t1<t2){
+                intPoint = castRay.m_point1 + (vhat*t1);
+
+            }
+            else{
+                intPoint = castRay.m_point1 + (vhat*t2);
+
+            }
+        }
+
+
         return true;
-       }
-       return false;
-
-    
-    
+    }
+    return false;
 }

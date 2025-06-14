@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS = -Wall -Wextra -O2 -std=c++17
+CFLAGS = -Wall -Wextra -Ofast -std=c++17 #-Ofast as sphere was rendering real slow
 LDFLAGS = -lSDL2
 
 SRC_DIR = .

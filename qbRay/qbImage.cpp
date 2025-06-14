@@ -44,6 +44,10 @@ void qbImage ::SetPixel(int x, int y, double red, double green, double blue)
     m_bChannel.at(x).at(y) = blue;
 }
 
+
+/*
+Updates the texture with pixel data from the image channels and renders it to the screen using SDL2.
+Handles pixel buffer creation, color conversion, and GPU texture upload for display*/
 void qbImage ::Display()
 {
     // allocate memory for pixel buffer
@@ -73,24 +77,36 @@ void qbImage ::Display()
     srcRect.w = m_xSize;
     srcRect.h = m_ySize;
     bounds = srcRect;
+
+    
+    /* SDL_RenderCopy is a core function in SDL2 used to copy  a texture onto a rendering target, 
+    typically your window or screen. It allows you to display images, sprites, or any graphical content 
+    stored as an SDL texture (texture is nothing just a buffer of memory).*/
     SDL_RenderCopy(m_pRenderer, m_pTexture, &srcRect, &bounds);
 }
 
 // Initialize the texture
 void qbImage ::InitTexture()
 {
+    /*
+    32-bit surfaces because
+    Full color range: 8 bits per channel provides 256 levels per color component
+    Memory alignment: 32 bits (4 bytes) align well with computer architecture
+    Transparency support: The alpha channel enables smooth blending and transparency effects
+    Standard format: Most graphics cards and libraries optimize for 32-bit RGBA
+        */
 
     Uint32 rmask, gmask, bmask, amask;
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
-    rmask = 0xff000000;
-    gmask = 0x00ff0000;
-    bmask = 0x0000ff00;
-    amask = 0x000000ff;
-#else
     rmask = 0x000000ff;
     gmask = 0x0000ff00;
     bmask = 0x00ff0000;
     amask = 0xff000000;
+#else
+    rmask = 0xff000000;
+    gmask = 0x00ff0000;
+    bmask = 0x0000ff00;
+    amask = 0x000000ff;
 #endif
 
     // delete any previously deleted texture
@@ -98,6 +114,15 @@ void qbImage ::InitTexture()
         SDL_DestroyTexture(m_pTexture);
 
     // create the texture that will store the image
+
+    /*
+    You could create a texture directly like this:pp
+    m_pTexture = SDL_CreateTexture(m_pRenderer, SDL_PIXELFORMAT_RGBA8888, 
+                               SDL_TEXTUREACCESS_STATIC, m_xSize, m_ySize);
+    However, this approach:Uses a predefined pixel format that might not match your exact requirements
+    Doesn't guarantee the same cross-platform byte order handling*/
+
+
     SDL_Surface *tempSurface = SDL_CreateRGBSurface(0, m_xSize, m_ySize, 32, rmask, gmask, bmask, amask);
     m_pTexture = SDL_CreateTextureFromSurface(m_pRenderer, tempSurface);
     SDL_FreeSurface(tempSurface);

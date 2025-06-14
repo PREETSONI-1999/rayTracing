@@ -39,16 +39,34 @@ bool CApp::OnInit()
 		return false;
 	}
 // Create SDL Window and Renderer
-    if (SDL_CreateWindowAndRenderer(720, 720, SDL_WINDOW_SHOWN, &pWindow, &pRenderer) != 0)
+    if (SDL_CreateWindowAndRenderer(1280, 720, SDL_WINDOW_SHOWN, &pWindow, &pRenderer) != 0)
     {
 		
         return false;
     } 
 
 	m_image.Initialize(1280,720,pRenderer);
+
+
+	//set the background color to white
+	SDL_SetRenderDrawColor(pRenderer, 255 , 255 , 255 , 255);
+	SDL_RenderClear(pRenderer);
+
+	//render the scene
+	m_scene.Render(m_image);
+
+	//display the image
+	m_image.Display();
+
+	//show the result
+	SDL_RenderPresent(pRenderer);
+
+
+
 	
 
-    return true;	// pWindow = SDL_CreateWindow("qbRayTracer", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, SDL_WINDOW_SHOWN);
+    return true;	
+	// pWindow = SDL_CreateWindow("qbRayTracer", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, SDL_WINDOW_SHOWN);
 	// if (pWindow != NULL)
 	// {
 	// 	// Initialise the renderer.
@@ -115,18 +133,18 @@ void CApp::OnLoop()
 
 void CApp::OnRender()
 {
-	// Set the background colour to white.
-	SDL_SetRenderDrawColor(pRenderer, 255, 255, 255, 255);
-	SDL_RenderClear(pRenderer);
+	// // Set the background colour to white.
+	// SDL_SetRenderDrawColor(pRenderer, 255, 255, 255, 255);
+	// SDL_RenderClear(pRenderer);
 	
 
-	//rende the scene
-	m_scene.Render(m_image);
-	// Display the image.
-	m_image.Display();
+	// //rende the scene
+	// m_scene.Render(m_image);
+	// // Display the image.
+	// m_image.Display();
 	
-	// Show the result.
-	SDL_RenderPresent(pRenderer);
+	// // Show the result.
+	// SDL_RenderPresent(pRenderer);
 }
 
 void CApp::OnExit()
