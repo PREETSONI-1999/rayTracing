@@ -12,6 +12,13 @@ qbRT::Scene::Scene(){
 	m_camera.SetAspect(16.0/9.0);
 	m_camera.UpdateCameraGeometry();
 
+	// Construct a test sphere.
+	m_objectList.push_back(std::make_shared<qbRT::ObjectSphere> (qbRT::ObjectSphere()));
+	
+	// Construct a test light.
+	m_lightList.push_back(std::make_shared<qbRT::PointLight> (qbRT::PointLight()));
+	m_lightList.at(0) -> m_location = qbVector<double> {std::vector<double> {5.0, -10.0, -5.0}};
+	m_lightList.at(0) -> m_color = qbVector<double> {std::vector<double> {255.0, 255.0, 255.0}};
 
 }
 
@@ -64,25 +71,45 @@ bool qbRT::Scene::Render(qbImage &outputImage){
 			// Generate the ray for this pixel.
 			m_camera.GenerateRay(normX, normY, cameraRay);
 			
-			// Test if we have a valid intersection.
-			bool validInt = m_testSphere.TestIntersection(cameraRay, intPoint, localNormal, localColor);
-			
-			// If we have a valid intersection, change pixel color to red.
-			if (validInt)
+			// Test for intersections with all objects in the scene.
+			for (auto currentObject : m_objectList)
 			{
-				// Compute the distance between the camera and the point of intersection.
-				double dist = (intPoint - cameraRay.m_point1).norm();
-				if (dist > maxDist)
-					maxDist = dist;
+				bool validInt = currentObject -> TestIntersection(cameraRay, intPoint, localNormal, localColor);
 				
-				if (dist < minDist)
-					minDist = dist;
+				// If we have a valid intersection, change pixel color to red.
+				if (validInt)
+				{
+					// Compute intensity of illumination.
+					double intensity;
+					qbVector<double> color {3};
+					bool validIllum = false;
+					for (auto currentLight : m_lightList)
+					{
+						validIllum = currentLight->ComputeIllumination(intPoint, localNormal, m_objectList, currentObject, color, intensity);
+					}
 				
-				outputImage.SetPixel(x, y, 255.0 - ((dist - 8.0) / 0.94101) * 255.0, 0.0, 0.0);
-			}
-			else
-			{
-				outputImage.SetPixel(x, y, 100.0, 100.0, 100.0);
+					// Compute the distance between the camera and the point of intersection.
+					double dist = (intPoint - cameraRay.m_point1).norm();
+					if (dist > maxDist)
+						maxDist = dist;
+					
+					if (dist < minDist)
+						minDist = dist;
+				
+					//outputImage.SetPixel(x, y, 255.0 - ((dist - 8.0) / 0.94101) * 255.0, 0.0, 0.0);
+					if (validIllum)
+					{
+						outputImage.SetPixel(x, y, 255.0 * intensity, 0.0, 0.0);
+					}
+					else
+					{
+						outputImage.SetPixel(x, y, 0.0, 0.0, 0.0);
+					}
+				}
+				else
+				{
+					outputImage.SetPixel(x, y, 0.0, 0.0, 0.0);
+				}				
 			}
 		}
 	}
@@ -90,6 +117,6 @@ bool qbRT::Scene::Render(qbImage &outputImage){
 	std::cout << "Minimum distance: " << minDist << std::endl;
 	std::cout << "Maximum distance: " << maxDist << std::endl;
 
-
+return true;
 
 }

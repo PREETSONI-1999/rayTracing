@@ -6,6 +6,9 @@
 #include "qbImage.hpp"
 #include "camera.hpp"
 #include "objectSphere.hpp"
+#include<memory>
+#include "objectSphere.hpp"
+#include "pointLight.hpp"
 
 namespace qbRT {
 
@@ -33,8 +36,12 @@ class Scene{
     qbRT::Camera m_camera;
 
     //Unit sphere for testing
-    qbRT :: ObjectSphere m_testSphere;
+    // qbRT :: ObjectSphere m_testSphere;
     
+// The list of objects in the scene.
+			std::vector<std::shared_ptr<qbRT::ObjectBase>> m_objectList;
+
+            			std::vector<std::shared_ptr<qbRT::LightBase>> m_lightList;
 
 
 };

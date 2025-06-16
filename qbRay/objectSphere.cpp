@@ -63,6 +63,10 @@ bool qbRT::ObjectSphere::TestIntersection(const qbRT::Ray &castRay, qbVector<dou
                 intPoint = castRay.m_point1 + (vhat*t2);
 
             }
+
+            // Compute the local normal (easy for a sphere at the origin!).
+			localNormal = intPoint;
+			localNormal.Normalize();
         }
 
 
