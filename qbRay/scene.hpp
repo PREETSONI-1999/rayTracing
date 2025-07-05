@@ -8,6 +8,7 @@
 #include "objectSphere.hpp"
 #include<memory>
 #include "objectSphere.hpp"
+#include "objectPlane.hpp"
 #include "pointLight.hpp"
 
 namespace qbRT {

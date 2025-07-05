@@ -5,7 +5,7 @@
 //the construtor
 qbRT::Scene::Scene(){
 	//configure the camera
-	m_camera.SetPosition(qbVector<double>{std::vector<double>{0.0,-10.0,0.0}});
+	m_camera.SetPosition(qbVector<double>{std::vector<double>{0.0,-10.0,-1.0}});
 	m_camera.SetLookAt(qbVector<double>{std::vector<double>{0.0,0.0,0.0}}); //look at origin
 	m_camera.SetUp(qbVector<double>{std::vector<double>{0.0,0.0,1.0}});
 	m_camera.SetHorzSize(0.25);
@@ -17,7 +17,11 @@ qbRT::Scene::Scene(){
 	m_objectList.push_back(std::make_shared<qbRT::ObjectSphere> (qbRT::ObjectSphere()));
 	m_objectList.push_back(std::make_shared<qbRT::ObjectSphere> (qbRT::ObjectSphere()));
 	m_objectList.push_back(std::make_shared<qbRT::ObjectSphere> (qbRT::ObjectSphere()));
-	
+
+	//construct a plane for testing
+	m_objectList.push_back(std::make_shared<qbRT::ObjectPlane> (qbRT::ObjectPlane()));
+	m_objectList.at(3) -> m_baseColor = qbVector<double>{std::vector<double>{128.0,128.0,128.0}};
+
 	// Modify the spheres.
 	qbRT::GTform testMatrix1, testMatrix2, testMatrix3;
 	testMatrix1.SetTransform(	qbVector<double>{std::vector<double>{-1.5, 0.0, 0.0}},
