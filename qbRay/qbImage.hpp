@@ -6,7 +6,6 @@
 #include <SDL2/SDL.h>
 #include<iostream>
 
-using namespace std;
 class qbImage{
     public:
         //constructor 
@@ -34,9 +33,9 @@ class qbImage{
         void InitTexture();
 
         //arrays to store image data 
-        vector<vector<double>>m_rChannel;
-        vector<vector<double>>m_gChannel;
-        vector<vector<double>>m_bChannel;
+        std::vector<std :: vector<double>>m_rChannel;
+        std::vector<std::vector<double>>m_gChannel;
+        std::vector<std::vector<double>>m_bChannel;
 
         //image dimensions
         int m_xSize, m_ySize;

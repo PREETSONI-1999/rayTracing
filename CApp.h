@@ -27,6 +27,9 @@
 #include <SDL2/SDL.h>
 #include "./qbRay/qbImage.hpp"
 #include "./qbRay/scene.hpp"
+#include "./qbRay/camera.hpp"
+
+
 class CApp
 {
 	public:

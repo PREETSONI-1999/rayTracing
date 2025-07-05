@@ -2,7 +2,7 @@
 #include "ray.hpp"
 #include <math.h>
 
-#define EPSILON 1e-21f
+#define EPSILON 1e-21f;
 
 //default constructor
 qbRT::ObjectBase::ObjectBase(){
@@ -20,6 +20,11 @@ bool qbRT::ObjectBase::TestIntersection(const qbRT::Ray &castRay , qbVector<doub
 qbVector<double> &localColor){
     //ewill also be overwritten
     return false;
+}
+
+void qbRT::ObjectBase::SetTransformMatrix(const qbRT::GTform &transformMatrix)
+{
+	m_transformMatrix = transformMatrix;
 }
 
 //function to test if 2 floating points nos are close to being equal

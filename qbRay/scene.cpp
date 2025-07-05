@@ -13,7 +13,33 @@ qbRT::Scene::Scene(){
 	m_camera.UpdateCameraGeometry();
 
 	// Construct a test sphere.
+	// Construct a test sphere.
 	m_objectList.push_back(std::make_shared<qbRT::ObjectSphere> (qbRT::ObjectSphere()));
+	m_objectList.push_back(std::make_shared<qbRT::ObjectSphere> (qbRT::ObjectSphere()));
+	m_objectList.push_back(std::make_shared<qbRT::ObjectSphere> (qbRT::ObjectSphere()));
+	
+	// Modify the spheres.
+	qbRT::GTform testMatrix1, testMatrix2, testMatrix3;
+	testMatrix1.SetTransform(	qbVector<double>{std::vector<double>{-1.5, 0.0, 0.0}},
+					qbVector<double>{std::vector<double>{0.0, 0.0, 0.0}},
+					qbVector<double>{std::vector<double>{0.5, 0.5, 0.75}});
+														
+	testMatrix2.SetTransform(	qbVector<double>{std::vector<double>{0.0, 0.0, 0.0}},
+					qbVector<double>{std::vector<double>{0.0, 0.0, 0.0}},
+					qbVector<double>{std::vector<double>{0.75, 0.5, 0.5}});
+														
+	testMatrix3.SetTransform(	qbVector<double>{std::vector<double>{1.5, 0.0, 0.0}},
+					qbVector<double>{std::vector<double>{0.0, 0.0, 0.0}},
+					qbVector<double>{std::vector<double>{0.75, 0.75, 0.75}});
+														
+	m_objectList.at(0) -> SetTransformMatrix(testMatrix1);
+	m_objectList.at(1) -> SetTransformMatrix(testMatrix2);
+	m_objectList.at(2) -> SetTransformMatrix(testMatrix3);
+	
+	m_objectList.at(0) -> m_baseColor = qbVector<double>{std::vector<double>{64.0, 128.0, 200.0}};
+	m_objectList.at(1) -> m_baseColor = qbVector<double>{std::vector<double>{255.0, 128.0, 0.0}};
+	m_objectList.at(2) -> m_baseColor = qbVector<double>{std::vector<double>{255.0, 200.0, 0.0}};
+	
 	
 	// Construct a test light.
 	m_lightList.push_back(std::make_shared<qbRT::PointLight> (qbRT::PointLight()));
@@ -99,16 +125,20 @@ bool qbRT::Scene::Render(qbImage &outputImage){
 					//outputImage.SetPixel(x, y, 255.0 - ((dist - 8.0) / 0.94101) * 255.0, 0.0, 0.0);
 					if (validIllum)
 					{
-						outputImage.SetPixel(x, y, 255.0 * intensity, 0.0, 0.0);
+						// outputImage.SetPixel(x, y, 255.0 * intensity, 0.0, 0.0);
+						outputImage.SetPixel(x, y,	localColor.GetElement(0) * intensity,
+										localColor.GetElement(1) * intensity,
+										localColor.GetElement(2) * intensity);
+
 					}
 					else
 					{
-						outputImage.SetPixel(x, y, 0.0, 0.0, 0.0);
+						// outputImage.SetPixel(x, y, 0.0, 0.0, 0.0);
 					}
 				}
 				else
 				{
-					outputImage.SetPixel(x, y, 0.0, 0.0, 0.0);
+					// outputImage.SetPixel(x, y, 0.0, 0.0, 0.0);
 				}				
 			}
 		}

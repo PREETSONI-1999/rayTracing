@@ -13,6 +13,9 @@ qbRT ::ObjectSphere::~ObjectSphere()
 
 bool qbRT::ObjectSphere::TestIntersection(const qbRT::Ray &castRay, qbVector<double> &intPoint, qbVector<double> &localNormal, qbVector<double> &localColor)
 {
+
+    // Copy the ray and apply the backwards transform.
+	qbRT::Ray bckRay = m_transformMatrix.Apply(castRay, qbRT::BCKTFORM);
     /* computing values a ,b ,c according to
 
         t^2 (v · v) + 2t (p1 · v) + (p1 · p1) - r^2 = 0
@@ -31,17 +34,20 @@ bool qbRT::ObjectSphere::TestIntersection(const qbRT::Ray &castRay, qbVector<dou
 
         (a is cast ray , v is direction Vector)
         */
-    qbVector<double> vhat = castRay.m_lab;
+    qbVector<double> vhat = bckRay.m_lab;
     vhat.Normalize();
 
     // a's value will always be 1, as it is square of magnitude of unit vector
 
-    double b = 2.0 * qbVector<double>::dot(castRay.m_point1, vhat);
+    double b = 2.0 * qbVector<double>::dot(bckRay.m_point1, vhat);
 
-    double c = qbVector<double>::dot(castRay.m_point1, castRay.m_point1) - 1.0;
+    double c = qbVector<double>::dot(bckRay.m_point1, bckRay.m_point1) - 1.0;
 
     // test whether intesection
-    double intTest = b * b - 4 * 1.0 * c;
+    double intTest = (b * b) - 4.0 * 1.0 * c;
+
+    	qbVector<double> poi;
+
     if (intTest > 0.0)
     {
 
@@ -56,17 +62,31 @@ bool qbRT::ObjectSphere::TestIntersection(const qbRT::Ray &castRay, qbVector<dou
         }
         else{
             if(t1<t2){
-                intPoint = castRay.m_point1 + (vhat*t1);
+                poi = bckRay.m_point1 + (vhat*t1);
 
             }
             else{
-                intPoint = castRay.m_point1 + (vhat*t2);
+                poi = bckRay.m_point1 + (vhat*t2);
 
             }
+            //transform the intersection point back to world co-ordinates
 
-            // Compute the local normal (easy for a sphere at the origin!).
-			localNormal = intPoint;
+            intPoint = m_transformMatrix.Apply(poi, qbRT::FWDTFORM);
+
+			
+
+			// Compute the local normal (easy for a sphere at the origin!).
+
+			qbVector<double> objOrigin = qbVector<double>{std::vector<double>{0.0, 0.0, 0.0}};
+
+			qbVector<double> newObjOrigin = m_transformMatrix.Apply(objOrigin, qbRT::FWDTFORM);
+
+			localNormal = intPoint - newObjOrigin;
 			localNormal.Normalize();
+            
+            // Return the base color.
+			localColor = m_baseColor;
+            
         }
 
 

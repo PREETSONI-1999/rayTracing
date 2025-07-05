@@ -30,7 +30,7 @@ void qbRT::Camera::SetUp(const qbVector<double> &upVector)
     m_cameraUp = upVector;
 }
 
-void qbRT::Camera::Setlength(double newLength)
+void qbRT::Camera::SetLength(double newLength)
 {
     m_cameraLength = newLength;
 }
@@ -125,7 +125,7 @@ bool qbRT::Camera::GenerateRay(float proScreenX,float proScreenY , qbRT::Ray &ca
 	
 	// Use this point along with the camera position to compute the ray.
     cameraRay.m_point1 = m_cameraPosition;
-    cameraRay.m_point1 = screenWorldCoordinate;
+    cameraRay.m_point2 = screenWorldCoordinate;
     cameraRay.m_lab=screenWorldCoordinate - m_cameraPosition;
 
      return true;

@@ -21,9 +21,9 @@ qbImage::~qbImage()
 void qbImage::Initialize(int xSize, int ySize, SDL_Renderer *pRenderer)
 {
     // resize the imagr arrays
-    m_rChannel.resize(xSize, vector<double>(ySize, 0.0));
-    m_gChannel.resize(xSize, vector<double>(ySize, 0.0));
-    m_bChannel.resize(xSize, vector<double>(ySize, 0.0));
+    m_rChannel.resize(xSize, std::vector<double>(ySize, 0.0));
+    m_gChannel.resize(xSize, std::vector<double>(ySize, 0.0));
+    m_bChannel.resize(xSize, std::vector<double>(ySize, 0.0));
 
     // store the dimensions
     m_xSize = xSize;

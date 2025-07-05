@@ -3,6 +3,8 @@
 
 #include "../qbLinAlg/qbVector.h"
 #include "./ray.hpp"
+#include "gtfm.hpp"
+
 
 namespace qbRT
 {
@@ -21,6 +23,9 @@ namespace qbRT
         //function to test for intersection
         virtual bool TestIntersection(const qbRT::Ray &castRay,qbVector<double>&intPoint , qbVector<double> &localNormal , qbVector<double> &localColor);
 
+// Function to set the transform matrix.
+			void SetTransformMatrix(const qbRT::GTform &transformMatrix);
+
             //fniction to test whether 2 doubles are APPROX equal
             bool CloseEnough(const double f1,const double f2);
 
@@ -32,6 +37,9 @@ namespace qbRT
 
         // public member vars
         qbVector<double> m_baseColor {3};
+
+        // The geometric transform applied to the object.
+			qbRT::GTform m_transformMatrix;
     };
 
 }
