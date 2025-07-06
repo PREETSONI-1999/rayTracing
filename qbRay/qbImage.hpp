@@ -32,6 +32,8 @@ class qbImage{
         Uint32 ConvertColor(double red,double green,double blue);
         void InitTexture();
 
+        void ComputeMaxValues();
+
         //arrays to store image data 
         std::vector<std :: vector<double>>m_rChannel;
         std::vector<std::vector<double>>m_gChannel;
@@ -39,6 +41,11 @@ class qbImage{
 
         //image dimensions
         int m_xSize, m_ySize;
+
+        //for incorporating dynamic range related stuff(colors value between 0-1)
+        //store the maximum values
+        double m_maxRed,m_maxGreen,m_maxBlue,m_overallMax;
+
 
         //SDL2
         SDL_Renderer *m_pRenderer;
